@@ -1,11 +1,17 @@
 import { Router } from "express";
 import * as MD from "../../../shared/middleware/Validation";
 import * as UV from "../validation/auth.validation";
-import { SignUpController } from "../controller/auth/signUp";
+import { SignUpFactory } from "../factory/signUpFactory";
+import { ConfirmEmailFactory } from "../factory/confirmEmailFactory";
 
 const userRouter = Router()
-const signUpController = new SignUpController()
-userRouter.post("/signUp", MD.Validation(UV.signUpSchema), signUpController.handle)
+// signUp  
+const signUpFactory = SignUpFactory()
+userRouter.post("/signUp", MD.Validation(UV.signUpSchema), signUpFactory.handle)
+// confirm email route
+const confirmEmailFactory = ConfirmEmailFactory()
+userRouter.patch("/confirmemail", confirmEmailFactory.handle)
+
 
 export default userRouter 
 

@@ -11,15 +11,15 @@ export class NodemailerService implements IEmailService {
             port: 465,
             secure: true,
             auth: {
-                user: process.env.EMAIL as string,
-                pass: process.env.PASSWORD as string,
+                user:"abdelrahmanseif99@gmail.com",
+                pass: "luswgmtshfuwnukl",
             },
         });
     }
 
     async sendEmail(to: string, subject: string, html: string): Promise<void> {
         const info = await this.transporter.sendMail({
-            from: `"socialmediaApp" ${ process.env.EMAIL as string }`,
+            from: `"socialmediaApp" abdelrahmanseif99@gmail.com`,
             to,
             subject,
             html

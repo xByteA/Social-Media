@@ -1,5 +1,5 @@
 import z from "zod";
-import { genderType, roleType } from "../../../shared/enums";
+import * as EN from "../../../shared/enums";
 
 export const signUpSchema = {
     body: z.object({
@@ -11,10 +11,12 @@ export const signUpSchema = {
         age: z.number().min(14, "Age must be at least 14").max(100, "Age must be less than 100"),
         phone: z.string().min(10, "Phone must be valid"),
         address: z.string().optional(),
-        gender: z.enum([genderType.male,genderType.female]),
-        role: z.enum([roleType.user,roleType.admin]),
+        gender: z.enum([EN.genderType.male,EN.genderType.female]),
+        role: z.enum([EN.roleType.user,EN.roleType.admin]),
     })
         .refine((data) => data.password === data.cPassword, {
             message: "Confirm password does not match password",
         })
 };
+
+signUpSchema.body

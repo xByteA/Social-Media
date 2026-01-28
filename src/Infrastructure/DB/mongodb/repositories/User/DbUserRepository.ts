@@ -1,24 +1,24 @@
-import { HydratedDocument, Model } from "mongoose";
-import {ICreateRepository } from "./Icreate";
-import { IFindById } from "./IFindById";
-import { IFindByemail } from "./IFindByEmail";
-import { IUser } from "../../../models/user.model";
+import { Model } from "mongoose";
+import * as UR from "./index";
+import { IUser } from "../../../models/IUser";
 
-export class DbUserRepository implements ICreateRepository, IFindByemail, IFindById {
+export class DbUserRepository implements UR.ICreateRepository, UR.IFindByemail, UR.IFindById, UR.IupdateOne {
     constructor(private readonly model: Model<IUser>) { }
-
-    async create(data: ICreateRepository.Params): Promise<ICreateRepository.Result> {
+    // create user
+    async create(data: UR.ICreateRepository.Params): Promise<UR.ICreateRepository.Result> {
         const doc = new this.model(data); 
         return await doc.save();
-        
-
     }
-    async findById(id: IFindById.Params): Promise<IFindById.Result> {
+    // find user by id
+    async findById(id: UR.IFindById.Params): Promise<UR.IFindById.Result> {
         return await this.model.findById(id);
     }
-
-    async findByEmail(email: string): Promise<IFindByemail.Result> {
+    // find user by email 
+    async findByEmail(email: string): Promise<UR.IFindByemail.Result> {
         return await this.model.findOne({email});
-        
+    }
+    // update user data 
+    async updateOne(filter: Record<string, any>, update: Record<string, any>): Promise < void> {
+        await this.model.updateOne(filter, update)
     }
 }
