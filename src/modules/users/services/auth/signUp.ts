@@ -2,14 +2,15 @@ import { EmailEventBus } from "../../../../Infrastructure/email/emailEvents";
 import { IEmailService } from "../../../../Infrastructure/email/IEmailService";
 import { IHasher } from "../../../../shared/utils/cryptography/IHasher";
 import { AppError } from "../../../../shared/utils/errors/AppError";
-import {ISignUpDtoReq } from "../../dtos/request/SignUpDtoReq";
+import { ISignUpDtoReq } from "../../dtos/request/SignUpDtoReq";
 import { ISignUpDtoRes } from "../../dtos/response/SignUpDtoRes";
-import { ISignUpRepo } from "../../interfaces/ISignUpRepo";
+import { ICreateUserRepo } from "../../interfaces/ICreateUserRepo";
+import { ISignUpService } from "../../interfaces/ISignUpService";
 
 
-export class SignUpService {
+export class SignUpService implements ISignUpService{
     constructor(
-        private repo: ISignUpRepo,
+        private repo: ICreateUserRepo,
         private hasher: IHasher,
         private emailService: IEmailService,
         private eventBus: EmailEventBus) {}
@@ -28,7 +29,18 @@ export class SignUpService {
         // hash otp
         const hashOtp=  await this.hasher.hash(String(otp))
         // create user
-        const user = await this.repo.create({ fName, lName,otp:hashOtp, email, password: hash, age, phone, address, gender, role });
+        const user = await this.repo.create({
+            fName,
+            lName,otp:hashOtp,
+            email,
+            password: 
+            hash, 
+            age, 
+            phone, 
+            address, 
+            gender, 
+            role 
+        });
         // send otp in email
         this.eventBus.emit("confirmEmail", { email, otp })
         // return response

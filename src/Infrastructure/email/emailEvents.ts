@@ -7,7 +7,7 @@ export class EmailEventBus {
 
     constructor(private emailService: IEmailService) {
         this.emitter.on("confirmEmail", async (data) => {
-            await this.emailService.sendEmail(data.email, "Confirm Email", `Your OTP is ${emailTemplate(data.otp)}`);
+            await this.emailService.sendEmail(data.email, "Confirm Email", `Your OTP is ${emailTemplate(data.otp,"Email Confirmation")}`);
         });
     }
     emit(event: string, payload: any) {

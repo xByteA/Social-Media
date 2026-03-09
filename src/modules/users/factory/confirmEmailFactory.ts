@@ -1,4 +1,4 @@
-import { userModel } from "../../../Infrastructure/DB/models/user.model";
+import { userModel } from "../../../Infrastructure/DB/models/User/user.model";
 import { DbUserRepository } from "../../../Infrastructure/DB/mongodb/repositories/User";
 import { BcryptAdapter } from "../../../shared/utils/cryptography/bcrypt-adapter";
 import { ConfirmEmailController } from "../controller/auth/confirmEmail";

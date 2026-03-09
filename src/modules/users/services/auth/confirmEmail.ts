@@ -1,23 +1,24 @@
 import { IComparer } from "../../../../shared/utils/cryptography/IComparer";
 import { AppError } from "../../../../shared/utils/errors/AppError";
-import { IconfirmEmailDto } from "../../dtos/request/ConfirmEmailDtoReq";
+import { IconfirmEmailDtoReq } from "../../dtos/request/index";
 import { IConfirmEmailRepo } from "../../interfaces/IConfirmEmailRepo";
+import { IConfirmEmailService } from "../../interfaces/IConfirmEmailService";
 
 
-export class ConfirmEmailService {
+export class ConfirmEmailService implements IConfirmEmailService {
     constructor(private comparer: IComparer,
         private repo: IConfirmEmailRepo
     ) {}
 
-    async confirmEmail(data: IconfirmEmailDto): Promise<string>{
+    async confirmEmail(data: IconfirmEmailDtoReq): Promise<string>{
         const {email, otp}= data
         const userExists = await this.repo.findByEmail(email)
         if (!userExists || userExists.confirmed===true) {
-            throw new AppError("Email already confirmed or not exist", 409);
+            throw new AppError("Email already confirmed or not exist", 404);
         }
         // compre otp
         const compared= await this.comparer.compare(otp,userExists?.otp!)
-        if (! compared){
+        if (!compared){
             throw new AppError("Invalid otp", 400)
         }
         // update confirmation
@@ -26,9 +27,3 @@ export class ConfirmEmailService {
     }
 
 }
-
-// const confirm= (data: any)=>{
-//     const {email, otp}= data
-//     // findByEmail $ confirmed
-//     // compare otp
-// }

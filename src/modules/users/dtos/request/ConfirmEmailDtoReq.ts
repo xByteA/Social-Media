@@ -1,4 +1,4 @@
-export interface IconfirmEmailDto {
+export interface IconfirmEmailDtoReq {
     email: string,
     otp:string
 } 

@@ -1,4 +1,4 @@
-import { IUser } from "../../../models/IUser"
+import { IUser } from "../../../models/User/IUser"
 
 export interface IFindById {
     findById: (account: IFindById.Params) => Promise<IFindById.Result>

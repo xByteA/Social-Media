@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import * as UR from "./index";
-import { IUser } from "../../../models/IUser";
+import { IUser } from "../../../models/User/IUser";
 
 export class DbUserRepository implements UR.ICreateRepository, UR.IFindByemail, UR.IFindById, UR.IupdateOne {
     constructor(private readonly model: Model<IUser>) { }
@@ -15,7 +15,7 @@ export class DbUserRepository implements UR.ICreateRepository, UR.IFindByemail, 
     }
     // find user by email 
     async findByEmail(email: string): Promise<UR.IFindByemail.Result> {
-        return await this.model.findOne({email});
+        return await this.model.findOne({email}).select("+password");
     }
     // update user data 
     async updateOne(filter: Record<string, any>, update: Record<string, any>): Promise < void> {

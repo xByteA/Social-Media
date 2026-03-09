@@ -1,4 +1,4 @@
-export const emailTemplate= (otp: string)=>{
+export const emailTemplate = (otp: string, msg:string)=>{
     return `
 <!DOCTYPE html>
 <html>
@@ -45,7 +45,7 @@ export const emailTemplate= (otp: string)=>{
                     </tr>
                     <tr>
                         <td>
-                            <h1 style="padding-top:25px; color:#630E2B">Email Confirmation</h1>
+                            <h1 style="padding-top:25px; color:#630E2B">${msg}</h1>
                         </td>
                     </tr>
                     <tr>
