@@ -11,7 +11,7 @@ export class BcryptAdapter implements IHasher,IComparer {
     }
 
     async hash (plainText:string): Promise<string>{
-        return bcrypt.hash(plainText,this.salt! |12)
+        return bcrypt.hash(plainText,this.salt! | 12)
     }
     async compare(plaintext: string, digest:string) {
         return bcrypt.compare(plaintext,digest)
