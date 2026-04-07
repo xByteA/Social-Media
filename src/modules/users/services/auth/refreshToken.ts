@@ -16,7 +16,7 @@ export class RefreshTokenService{
         const {user, token}= data
 
         const payload = { id: user._id, email: user.email }
-        // create access tpken
+        // create access token
         const access_token = await this.token.encrypt({
             payload,
             signature: user.role == roleType.user ? process.env.ACCESS_TOKEN_USER! : process.env.ACCESS_TOKEN_ADMIN!,
